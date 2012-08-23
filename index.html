@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <!-- WELCOME TO THE WORST CODE EVER. ENJOY -->
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <link rel="apple-touch-icon" href="img/icon-classic.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/icon-retina.png">
+    <link rel="stylesheet" type="text/css" href="soundsquare.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="underscore.min.js"></script>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB6zIbcDMqhrHccdeW2v5CNcfWYRlDZCos&amp;sensor=true">
+    </script>
+    <script src="//connect.soundcloud.com/sdk.js"></script>
+    <script>
+      audio = new Audio();
+      SC.initialize({
+        client_id: '827bc72c3e385eafebf59a31e9be0017',
+        // redirect_uri: '',
+      });
+    </script>
+  </head>
+  <body>
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+    <div id="screen1" class="screen"></div>
+    <div id="screen2" class="screen">
+      <div class="innerHeader autoWidth">
+        <hgroup>
+          <!-- <h1>Ready? Play!</h1> -->
+          <h2></h2>
+          <!-- <h3>Japanese tea room foursquare</h3> -->
+        </hgroup>
+        <button class="btnPlay">Play or pause</button>
+        <button class="btnNext">Next sound</button>
+        <button class="btnPrev">Previous sound</button>
+      </div>
+    </div>
+    <script src="soundsquare.js"></script>
+    <script src="screen1.js"></script>
+    <script src="map.js"></script>
+    <script src="screen2.js"></script>
+    <script src="player.js"></script>
+  </body>
+</html>

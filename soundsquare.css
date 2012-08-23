@@ -1,0 +1,85 @@
+* { margin:0; padding: 0; border:0; background: none;}
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-size: 12px;
+}
+
+#map_canvas { height:100%; visibility: hidden; }
+
+.screen:not(#screen1) {
+  display: none;
+}
+
+#screen1 {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background: url(img/screen1.png) 0 0 no-repeat;
+}
+
+.gmnoprint {
+  display: none;
+}
+
+.innerHeader {
+  min-height: 50px;
+  padding: 20px 0 10px;
+  background: #ffffff;
+  background: -moz-linear-gradient(top,  #ffffff 0%, #e3e3e3 100%);
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#e3e3e3 100%);
+  background: -o-linear-gradient(top,  #ffffff 0%,#e3e3e3 100%);
+  background: linear-gradient(to bottom,  #ffffff 0%,#e3e3e3 100%);
+  border-bottom: 1px solid #c9c9c9;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+}
+
+hgroup {
+  margin: 0 0 0 70px;
+  font-family: "Helvetica Neue Bold", "Helvetica Neue", Helvetica, Arial;
+}
+
+hgroup h1 {
+  font-size: 16px;
+  color: #404040;
+}
+
+hgroup h2 {
+  font-size: 18px;
+  color: #ff7800;
+}
+
+.btnPlay {
+  width: 34px;
+  height: 34px;
+  border-radius: 17px;
+  background: green;
+  position: absolute;
+  top: 26px;
+  left: 26px;
+  text-indent: -9999px;
+}
+
+.btnPrev {
+  background:url(img/btprev.png) 0 0 no-repeat;
+  width: 10px;
+  height: 19px;
+  position: absolute;
+  left: 5px;
+  top: 36px;
+  text-indent: -9999px;
+}
+
+.btnNext {
+  background:url(img/btnext.png) 0 0 no-repeat;
+  width: 10px;
+  height: 19px;
+  position: absolute;
+  right: 5px;
+  top: 36px;
+  text-indent: -9999px;
+}
+
