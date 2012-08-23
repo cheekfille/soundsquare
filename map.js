@@ -23,25 +23,47 @@
     markers.forEach(function(marker){
       marker.setMap(null);
     });
-  }
+  };
+
+  var removeMarker = function(attrs) {
+    markers.forEach(function(marker){
+      if (marker._sound_id === attrs.id) {
+        marker.setMap(null);
+      }
+    });
+  };
 
 
   $(document)
 
     .on('sc:geo:get', function(event) {
-      console.log(event.coords.latitude, event.coords.longitude, localizationMarker);
-      if (event._center !== false) {
-        map.setCenter(new google.maps.LatLng(event.coords.latitude, event.coords.longitude));
-      }
       // set a marker on this position with maplocation.png
+      var latlng = new google.maps.LatLng(event.coords.latitude, event.coords.longitude);
       if (localizationMarker) {
-        localizationMarker.setPosition(new google.maps.LatLng(event.coords.latitude, event.coords.longitude));
+        localizationMarker.setPosition(latlng);
       } else {
         localizationMarker = new google.maps.Marker({
-          position: new google.maps.LatLng(event.coords.latitude, event.coords.longitude),
+          position: latlng,
           map: map,
           icon: 'img/maplocation.png'
         });
+      }
+      if (event._center !== false) {
+        map.setCenter(latlng);
+        circle = new google.maps.Circle({
+            map: map,
+            clickable: false,
+            radius: 100, // in meters
+            fillColor: '#fff',
+            fillOpacity: 0.6,
+            strokeColor: '#313131',
+            strokeOpacity: 0.4,
+            strokeWeight: 0.8
+        });
+        // Attach circle to marker
+        circle.bindTo('center', localizationMarker, 'position');
+      } else {
+        circle.setCenter(latlng);
       }
     })
 
@@ -51,6 +73,13 @@
       }
       event.collection.forEach(function(attrs) {
         setMarker(attrs);
+      });
+
+      var bounds = circle.getBounds();
+      event.collection.forEach(function(attrs) {
+        if (!bounds.contains( new google.maps.LatLng(attrs._latlng[0], attrs._latlng[1]) )) {
+          removeMarker(attrs);
+        }
       });
     })
 
