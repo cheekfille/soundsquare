@@ -8,6 +8,7 @@
 
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   var markers = [];
+  var localizationMarker;
 
   var setMarker = function(attrs) {
     markers.push(new google.maps.Marker({
@@ -18,21 +19,36 @@
     }));
   };
 
+  var removeMarkers = function() {
+    markers.forEach(function(marker){
+      marker.setMap(null);
+    });
+  }
+
 
   $(document)
 
     .on('sc:geo:get', function(event) {
-      map.setCenter(new google.maps.LatLng(event.coords.latitude, event.coords.longitude));
+      console.log(event.coords.latitude, event.coords.longitude, localizationMarker);
+      if (event._center !== false) {
+        map.setCenter(new google.maps.LatLng(event.coords.latitude, event.coords.longitude));
+      }
       // set a marker on this position with maplocation.png
-      if ()
-      new google.maps.Marker({
-        position: new google.maps.LatLng(event.coords.latitude, event.coords.longitude),
-        map: map,
-        icon: 'img/maplocation.png'
-      });
+      if (localizationMarker) {
+        localizationMarker.setPosition(new google.maps.LatLng(event.coords.latitude, event.coords.longitude));
+      } else {
+        localizationMarker = new google.maps.Marker({
+          position: new google.maps.LatLng(event.coords.latitude, event.coords.longitude),
+          map: map,
+          icon: 'img/maplocation.png'
+        });
+      }
     })
 
     .on('sc:geo:display', function(event) {
+      if (markers) {
+        removeMarkers();
+      }
       event.collection.forEach(function(attrs) {
         setMarker(attrs);
       });
