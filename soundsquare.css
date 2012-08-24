@@ -65,7 +65,7 @@ hgroup h2 {
 .btnPlay {
   width: 34px;
   height: 34px;
-  background: url(img/btplay.png);
+  background: url(img/btplay.png) 0 0 no-repeat;
   position: absolute;
   top: 16px;
   left: 26px;
@@ -73,7 +73,7 @@ hgroup h2 {
 }
 
 .btnPlay.playing {
-  background: url(img/btpause.png);
+  background-image: url(img/btpause.png);
 }
 
 .btnPrev {
@@ -104,5 +104,16 @@ only screen and (-webkit-min-device-pixel-ratio: 1.5),
 only screen and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min--moz-device-pixel-ratio: 1.5),
 only screen and (min-device-pixel-ratio: 1.5) {
-
+	.btnPlay {
+	  background-image: url(img/btplay_retina.png);
+	  background-size: 34px 34px;
+	}
+	.btnPause {
+	  background-image: url(img/btpause_retina.png);
+	  background-size: 34px 34px;
+	}
+	#screen1 {
+    background: url(img/screen1-retina.png) 0 0 no-repeat;
+    background-image : 320px 480px;
+  }
 }
