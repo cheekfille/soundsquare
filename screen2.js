@@ -4,6 +4,8 @@
     fetchData();
   });
 
+  var collection;
+
   var fetchData = function() {
     $.ajax({
       type: 'get',
@@ -23,7 +25,7 @@
   };
 
   var afterFetch = function(data) {
-    var collection = _.compact(data.collection.map(function(attrs) {
+    collection = _.compact(data.collection.map(function(attrs) {
       var latlng = hasGeoTags(attrs.tag_list);
       if (attrs.title.indexOf('#sbud') != -1 && latlng) {
         attrs._latlng = latlng;
@@ -31,17 +33,15 @@
       }
     }));
 
-    //  TODO: order by the nearest
-
     $(document).trigger({
-      type: 'sc:geo:display',
+      type: 'sc:collection:ready',
       collection: collection
     });
   };
 
   $(document).on('sc:audio:play', function(event) {
     // $('h1').text('You are listening to:')
-    $('h2').text(event.sound.title.replace('#sbud',''))
+    $('h2').text(event.sound.title.replace('#sbud',''));
   });
 
 }());
