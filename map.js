@@ -9,6 +9,7 @@
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   var markers = [];
   var localizationMarker;
+  var playlistCollection;
 
   var setMarker = function(attrs) {
     markers.push(new google.maps.Marker({
@@ -45,6 +46,7 @@
         localizationMarker = new google.maps.Marker({
           position: latlng,
           map: map,
+          zIndex: google.maps.Marker.MAX_ZINDEX,
           icon: 'img/maplocation.png'
         });
       }
@@ -54,11 +56,8 @@
             map: map,
             clickable: false,
             radius: 100, // in meters
-            fillColor: '#fff',
-            fillOpacity: 0.6,
-            strokeColor: '#313131',
-            strokeOpacity: 0.4,
-            strokeWeight: 0.8
+            fillOpacity: 0,
+            strokeOpacity: 0
         });
         // Attach circle to marker
         circle.bindTo('center', localizationMarker, 'position');
@@ -67,7 +66,7 @@
       }
     })
 
-    .on('sc:geo:display', function(event) {
+    .on('sc:collection:ready', function(event) {
       if (markers) {
         removeMarkers();
       }
@@ -76,11 +75,20 @@
       });
 
       var bounds = circle.getBounds();
+      playlistCollection = [];
       event.collection.forEach(function(attrs) {
         if (!bounds.contains( new google.maps.LatLng(attrs._latlng[0], attrs._latlng[1]) )) {
           removeMarker(attrs);
+        } else {
+          playlistCollection.push(attrs);
         }
       });
+
+      $(document).trigger({
+        type: 'sc:playlist:ready',
+        playlist: playlistCollection
+      });
+
     })
 
     .on('sc:map:highlight', function(event) {

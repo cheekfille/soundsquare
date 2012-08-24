@@ -23,7 +23,7 @@
     setCurrentPosition();
   });
 
-  $(document).on('sc:geo:display', function() {
+  $(document).on('sc:collection:ready', function() {
     screen1.fadeOut('slow');
     screen2.fadeIn('slow');
   });
