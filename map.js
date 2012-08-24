@@ -13,16 +13,18 @@
 
   var setMarker = function(attrs) {
     markers.push(new google.maps.Marker({
-        position: new google.maps.LatLng(attrs._latlng[0], attrs._latlng[1]),
-        map: map,
-        icon: 'img/mapmarker.png',
-        _sound_id: attrs.id
+      position: new google.maps.LatLng(attrs._latlng[0], attrs._latlng[1]),
+      map: map,
+      icon: 'img/mapmarker.png',
+      _sound_id: attrs.id
     }));
   };
 
   var removeMarkers = function() {
     markers.forEach(function(marker){
-      marker.setMap(null);
+      if (marker.icon !== 'img/mapbuddy.png') {
+        marker.setMap(null);
+      }
     });
   };
 
@@ -91,15 +93,17 @@
 
     })
 
-    .on('sc:map:highlight', function(event) {
-      var audio = event.audio,
+    .on('sc:map:highlight sc:audio:play', function(event) {
+      var audio = event.audio || event.sound,
           highlightedMarker;
       _.each(markers, function(marker){
         if (marker._sound_id === audio.id) {
           marker.setIcon('img/mapbuddy.png');
+          marker.setZIndex(google.maps.Marker.MAX_ZINDEX - 1);
           highlightedMarker = marker;
         } else {
           marker.setIcon('img/mapmarker.png');
+          marker.setZIndex(0);
         }
       });
 
