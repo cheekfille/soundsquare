@@ -113,7 +113,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
 	  background-size: 34px 34px;
 	}
 	#screen1 {
-    background: url(img/screen1-retina.png) 0 0 no-repeat;
-    background-image : 320px 480px;
+    background-image: url(img/screen1-retina.png);
+    background-size: 320px 480px;
   }
 }

@@ -1,7 +1,7 @@
 (function(){
   var mapOptions = {
     center: new google.maps.LatLng(52.530821822916664, 13.419200485416665),
-    zoom: 18,
+    zoom: 17,
     disableDefaultUI: true,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
