@@ -4,34 +4,43 @@
     return sound.stream_url.replace('http://api.soundcloud.com','').replace('/stream','');
   };
 
+  var playlist = [],
+      currentSound;
+
   $(document)
 
     .on('sc:playlist:ready', function(event) {
+      var playlistIds = _.pluck(playlist, 'id');
 
-      var collection = event.playlist.map(function(sound) {
-        if (sound.streamable) {
+      event.playlist.forEach(function(sound){
+        if (sound.streamable && !_.any(playlistIds, function(id) { return id === sound.id; } )) {
           sound.stream_url = sound.stream_url + '?client_id=827bc72c3e385eafebf59a31e9be0017';
-          return sound;
+          playlist.push(sound);
         }
       });
 
       if (!audio.isPlaying) {
-        $(audio).data('collection', collection);
-        $('h2').text(collection[0].title.replace('#sbud',''));
+        $('h2').text(playlist[0].title.replace('#sbud',''));
         $(document).trigger({
           type:'sc:map:highlight',
-          audio: collection[0]
+          audio: playlist[0]
         });
       }
     });
 
 
-  $('.btnPlay').on('click', function() {
-    var collection = $(audio).data('collection');
-    var sound = collection[0];
+  $('.btnPlay').on('click', function(event) {
 
-    if (audio.src !== sound.stream_url) {
-      audio.src = sound.stream_url;
+    currentSound = _.find(playlist, function(current){
+      return !current._played;
+    });
+
+    if (currentSound === undefined) {
+      return;
+    }
+
+    if (audio.src !== currentSound.stream_url) {
+      audio.src = currentSound.stream_url;
     }
 
     if ($(this).hasClass('playing')) {
@@ -42,10 +51,10 @@
       audio.play();
     }
 
+
     $(document).trigger({
       type: 'sc:audio:play',
-      sound: sound,
-      collection: collection
+      sound: currentSound
     });
 
   });
@@ -61,7 +70,16 @@
     })
     .on('ended', function() {
       this.isPlaying = false;
-      $('.btnPlay').toggleClass('playing', false);
+
+      playlist.forEach(function(current){
+        if (current.id === currentSound.id) {
+          current._played = true;
+        }
+      });
+
+      $('.btnPlay')
+        .toggleClass('playing', false)
+        .click();
     });
 
 }());
