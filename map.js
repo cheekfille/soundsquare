@@ -1,7 +1,7 @@
 (function(){
   var mapOptions = {
     center: new google.maps.LatLng(52.530821822916664, 13.419200485416665),
-    zoom: 15,
+    zoom: 18,
     disableDefaultUI: true,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -22,9 +22,9 @@
 
   var removeMarkers = function() {
     markers.forEach(function(marker){
-      if (marker.icon !== 'img/mapbuddy.png') {
+      // if (marker.icon !== 'img/mapbuddy.png') {
         marker.setMap(null);
-      }
+      // }
     });
   };
 
